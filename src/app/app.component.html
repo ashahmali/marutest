@@ -8,11 +8,16 @@
 
 							<div class="card-3d-wrapper">
 								<div class="card-back" *ngFor="let question of questions; index as i" [hidden]="question.page !== currentPage">
+									<div class="card-image">
+										<h2 class="card-heading">
+											MaruHub Survey
+											<small>{{"Page " +question.page}}</small>
+										</h2>
+									</div>
 
 									<div class="center-wrap">
 										<div class="section text-info">
-											<h4 class="mb-4 pb-3">{{"Page " +question.page}}</h4>
-											<div class="form-group">
+											<div class="form-group mt-3">
 												<span>{{question.page == 3 ? formatAnswer(question.text, questions[1]) : question.text}}</span>
 
 											</div>
