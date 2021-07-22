@@ -12,17 +12,17 @@ export class AppComponent {
   faArrowLeft = faArrowLeft;
   faArrowRight = faArrowRight;
   formValid: boolean = true;
-  currentPage:number = 1;
+  currentPage: number = 1;
   questions: Question[] = [
     {
       page: 1,
       text: "Please tell us your age?",
       answers: [
-        {0:"Under 18"},
-        {1:"18 - 30"},
-        {2:"31 - 45"},
-        {3:"46 - 60"},
-        {4:"60+"},
+        "Under 18",
+        "18 - 30",
+        "31 - 45",
+        "46 - 60",
+        "60+",
       ],
       chosen: "",
       type: "radio"
@@ -31,40 +31,40 @@ export class AppComponent {
       page: 2,
       text: "From the following list which of these animals is your favorite?",
       answers: [
-        {0:"Rabbit"},
-        {1:"Cat"},
-        {2:"Dog"},
-        {3:"Goldfish"},
+        "Rabbit",
+        "Cat",
+        "Dog",
+        "Goldfish",
       ],
       chosen: {},
-      type:"check"
+      type: "check"
     },
     {
       page: 3,
       text: "What do you like about ",
       answers: [],
       chosen: "",
-      type:"text"
+      type: "text"
     }
   ];
   title = 'survey';
 
-  gotoNextPage(form: NgForm){
-    const vldt = Object.keys(this.questions[this.currentPage-1].chosen).length;
-    if(!vldt){
+  gotoNextPage(form: NgForm) {
+    const vldt = Object.keys(this.questions[this.currentPage - 1].chosen).length;
+    if (!vldt) {
       this.formValid = false;
       return;
     }
     const lastPage = this.questions.length;
-    if(this.currentPage<lastPage) this.currentPage++;
+    if (this.currentPage < lastPage) this.currentPage++;
     this.formValid = true;
   }
-  gotoPreviousPage(form: NgForm){
+  gotoPreviousPage(form: NgForm) {
     const lastPage = this.questions.length;
-    if(this.currentPage>=1) this.currentPage--;
+    if (this.currentPage >= 1) this.currentPage--;
   }
 
-  submitAnswers(form: NgForm){
+  submitAnswers(form: NgForm) {
     if (form.invalid) {
       this.formValid = false;
       alert("Please answer all question")
@@ -75,14 +75,14 @@ export class AppComponent {
   }
   getAnswers(): string {
     // this just to hold arbitraty key value pair
-    let result:any = {}
-    this.questions.map((question:Question)=>{
+    let result: any = {}
+    this.questions.map((question: Question) => {
       result[question.page] = this.getSelectedOptions(question);
     })
     return JSON.stringify(result)
   }
 
-  formatAnswer(prefix:string, question: Question){
+  formatAnswer(prefix: string, question: Question) {
     return prefix + ' ' + this.getSelectedOptions(question);
   }
   getSelectedOptions(question: Question) {
@@ -90,7 +90,7 @@ export class AppComponent {
     let selectOptions = [];
     for (let [key, value] of Object.entries(question.chosen)) {
       if (!!value) {
-        selectOptions.push(Object.values(question.answers[key]))
+        selectOptions.push(question.answers[key]);
       }
     }
     return selectOptions.join(', ')
