@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { NgForm } from '@angular/forms';
+import { Question } from './question.interface';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,7 @@ export class AppComponent {
   faArrowRight = faArrowRight;
   formValid: boolean = true;
   currentPage:number = 1;
-  questions:any = [
+  questions: Question[] = [
     {
       page: 1,
       text: "Please tell us your age?",
@@ -72,18 +73,19 @@ export class AppComponent {
     alert(this.getAnswers())
 
   }
-  getAnswers(): any {
+  getAnswers(): string {
+    // this just to hold arbitraty key value pair
     let result:any = {}
-    this.questions.map((question:any)=>{
+    this.questions.map((question:Question)=>{
       result[question.page] = this.getSelectedOptions(question);
     })
     return JSON.stringify(result)
   }
 
-  formatAnswer(prefix:string, question: any){
+  formatAnswer(prefix:string, question: Question){
     return prefix + ' ' + this.getSelectedOptions(question);
   }
-  getSelectedOptions(question: any) {
+  getSelectedOptions(question: Question) {
     if(typeof question.chosen == 'string') return question.chosen
     let selectOptions = [];
     for (let [key, value] of Object.entries(question.chosen)) {
